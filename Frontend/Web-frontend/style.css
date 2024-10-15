@@ -1,0 +1,254 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "General Sans";
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+#minicircle {
+    transition: all cubic-bezier(0.19, 1, 0.22, 1) 1s;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    z-index: 99999;
+    border-radius: 50%;
+    background-color: black;
+}
+
+#main {
+    width: 100%;
+    background-color: #F7DCB9;
+}
+
+#hero {
+    position: relative;
+    color: black;
+    width: 100%;
+    height: 100%;
+    background-color: #F7DCB9;
+}
+
+#img1 img {
+    margin-left: 35%;
+    width: 30%; /* Adjust image size for responsiveness */
+}
+
+#img1 h1 {
+    text-transform: uppercase;
+    font-size: 7.6vw;
+    opacity: .7;
+    text-align: center;
+}
+
+.blocktext h2 {
+    text-transform: uppercase;
+    font-size: 35px;
+    text-align: center !important;
+}
+
+#about {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    color: black;
+    padding: 0 15vw;
+    margin-top: 10%;
+    width: 100%;
+    background-color: #F7DCB9;
+    flex-wrap: wrap; /* Ensure the content wraps on smaller screens */
+}
+
+#textabout {
+    width: 100%; /* Responsive width */
+}
+
+#textabout h1 {
+    text-transform: uppercase;
+    opacity: .6;
+    margin-bottom: 10px;
+    font-size: 3vw;
+}
+
+#textabout p {
+    line-height: 1.7;
+    margin-bottom: 30px;
+    font-size: 25px;
+}
+
+#textabout h4 {
+    padding: 12px 22px;
+    border: 1px solid black;
+    border-radius: 100px;
+    text-align: center;
+    position: relative;
+    color: black;
+    margin-top: 20%;
+    font-size: 50px;
+    opacity: 0.8;
+    transition: all ease 0.4s;
+    overflow: hidden;
+}
+
+#textabout h4 a {
+    color: black;
+    text-decoration: none;
+    position: relative;
+    z-index: 9;
+}
+
+#textabout h4:hover a {
+    color: #fff;
+}
+
+#textabout h4::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    left: 0;
+    bottom: -100%;
+    border-radius: 50%;
+    transition: all ease 0.4s;
+}
+
+#textabout h4:hover::after {
+    bottom: 0;
+    border-radius: 0;
+}
+
+#second {
+    color: black;
+    padding-right: 10vw;
+    padding-top: 100px; /* Reduced padding for smaller screens */
+    background-color: #F7DCB9;
+    width: 100%;
+    min-height: 100vh; /* Use min-height instead of fixed height */
+    height: auto; /* Let the height adjust based on content */
+}
+
+.elem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 3.5vw 3vw;
+    padding-right: 0;
+    border-top: 1px solid #888;
+    flex-wrap: wrap; /* Ensure elements adjust properly */
+}
+
+.elem h5{
+    font-size: 25px;
+}
+
+.elem h1 {
+    text-transform: uppercase;
+    font-size: 7.6vw;
+    opacity: .7;
+}
+
+.elemlast {
+    border-bottom: 1px solid #888;
+}
+
+.elem img {
+    position: absolute;
+    top: 50%;
+    left: 90%;
+    transform: translate(-50%, -50%); /* Center the image */
+    border-radius: 20px;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0s ease; /* Smooth transition for opacity */
+    width: 300px; /* Adjust size based on your layout */
+    height: auto; /* Adjust size based on your layout */
+  }
+
+#pagefooter {
+    color: #F7DCB9;
+    padding: 20px 30px;
+    padding-bottom: 7vw;
+    background-color: #F7DCB9;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Large Screens */
+@media screen and (min-width: 1200px) {
+    #about {
+        padding: 0 20vw;
+    }
+
+    #textabout p {
+        font-size: 22px;
+    }
+}
+
+/* Tablets and Medium Screens */
+@media screen and (max-width: 1200px) {
+    #about {
+        padding: 0 10vw;
+        flex-direction: column; /* Stack items vertically on tablets */
+        margin-top: 10%;
+    }
+
+    #textabout {
+        width: 100%;
+        text-align: center;
+    }
+
+    #textabout p {
+        font-size: 20px;
+    }
+
+    #img1 img {
+        margin-left: 0;
+        width: 50%;
+    }
+}
+
+/* Small Screens and Mobile */
+@media screen and (max-width: 768px) {
+    #about {
+        padding: 0 5vw;
+        gap: 20px;
+    }
+
+    #textabout {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #textabout h4 {
+        font-size: 30px;
+        margin-top: 10%;
+    }
+
+    #img1 img {
+        width: 70%;
+    }
+
+    #textabout p {
+        font-size: 18px;
+    }
+
+    #second {
+        padding-top: 50px; /* Reduced padding for better fit */
+        padding-right: 5vw;
+        min-height: auto; /* Dynamic height for small screens */
+    }
+
+    .elem h1 {
+        font-size: 6vw;
+    }
+
+    #pagefooter {
+        padding: 10px 20px;
+    }
+}
