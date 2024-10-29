@@ -18,9 +18,9 @@ class WeatherRequest(Model):
 class GroundwaterRequest(Model):
     location: str
 
+weather_agent_address = 'ADDRESS'
+groundwater_agent_address = "ADDRESS"
 
-weather_agent_address = 'agent1qvdk03p35yxstdc36xfk0a6zt8tncv45ky9d2hc5mvujhrtha5y573f8ylk'
-groundwater_agent_address = "agent1qfrn3f60f85m37fushp4eg2u6luevadfv7gtrsfh88taycdk6qsjseytxau"
 
 gemini_api_key = os.getenv('gemini_api_key')
 

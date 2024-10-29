@@ -33,12 +33,6 @@ GroundwaterAgent = Agent(
 )
 
 fund_agent_if_low(GroundwaterAgent.wallet.address())
-MailBox_API='4e2d0417-02ac-48a5-a03b-265b6281fda0'
-# from uagents import Agent
-#
-# agent = Agent(
-# 	mailbox=”4e2d0417-02ac-48a5-a03b-265b6281fda0"
-# )
 
 
 def fetch_groundwater_data(location):

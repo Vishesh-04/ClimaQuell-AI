@@ -22,12 +22,6 @@ class ErrorResponse(Model):
     error: str
 
 
-MailBox_API = '25c0c3db-c98a-426f-8a59-baa5d5573f35'
-# from uagents import Agent
-#
-# agent = Agent(
-# 	mailbox=”25c0c3db-c98a-426f-8a59-baa5d5573f35"
-# )
 
 
 WEATHER_API_KEY = os.getenv('WEATHER_API_KEY')
@@ -45,7 +39,7 @@ fund_agent_if_low(TemperatureAgent.wallet.address())
 async def fetch_weather_data(location):
     try:
         print(f"Fetching weather data for {location}")
-        url = f"http://api.weatherapi.com/v1/current.json?key=bb105451e60b48b483880333240102&q={location}&aqi=yes"
+        url = f"http://api.weatherapi.com/v1/current.json?key=WEATHER_API_KEY&q={location}&aqi=yes"
         response = requests.get(url)
         response.raise_for_status()
         data = response.json()
