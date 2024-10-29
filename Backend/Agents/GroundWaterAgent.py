@@ -1,8 +1,6 @@
 from uagents import Agent, Context, Model
 from uagents.setup import fund_agent_if_low
-from pydantic import Field
 import requests
-import os
 
 # Define Request and Response Models
 class GroundwaterRequest(Model):
@@ -27,7 +25,6 @@ class ErrorResponse(Model):
     error: str
 
 
-# Create an instance of the Agent class
 GroundwaterAgent = Agent(
     name="GroundwaterAgent",
     port=8001,
@@ -35,22 +32,22 @@ GroundwaterAgent = Agent(
     endpoint=["http://127.0.0.1:8001/submit"],
 )
 
-# Fund the agent if it's low on funds
 fund_agent_if_low(GroundwaterAgent.wallet.address())
+MailBox_API='4e2d0417-02ac-48a5-a03b-265b6281fda0'
+# from uagents import Agent
+#
+# agent = Agent(
+# 	mailbox=”4e2d0417-02ac-48a5-a03b-265b6281fda0"
+# )
 
-
-# Function to fetch groundwater data from a predefined JSON dataset (stored in context storage)
 
 def fetch_groundwater_data(location):
     try:
         print(f"Fetching groundwater data for {location}")
-        # Replace 'location' with 'district' in the API call
         url = f"http://localhost:8080/get/{location}"
         response = requests.get(url)
-        response.raise_for_status()  # Raise error for bad status codes
+        response.raise_for_status()
         data = response.json()
-
-        # Return groundwater data in structured format
         return {
             "status": True,
             "district_name": data['district_name'],
@@ -70,24 +67,21 @@ def fetch_groundwater_data(location):
 
 
 
-# On agent startup, log the agent's details
+
 @GroundwaterAgent.on_event('startup')
 async def agent_details(ctx: Context):
     ctx.logger.info(f'Groundwater Agent Address: {GroundwaterAgent.address}')
 
 
-# Query handler for groundwater requests
 @GroundwaterAgent.on_query(model=GroundwaterRequest, replies={GroundWaterResponse, ErrorResponse})
 async def query_handler(ctx: Context, sender: str, msg: GroundwaterRequest):
     ctx.logger.info(f"Received groundwater query for location: {msg.location}")
     ctx.logger.info(f"Sender: {sender}")
     print(msg.location)
 
-    # Fetch the groundwater data for the requested location asynchronously
     groundwater_data = fetch_groundwater_data(msg.location)
 
     if groundwater_data["status"]:
-        # Send the groundwater data as a response
         ctx.logger.info(f"Weather data retrieved successfully: {groundwater_data}")
         await ctx.send(
             sender,
@@ -106,10 +100,7 @@ async def query_handler(ctx: Context, sender: str, msg: GroundwaterRequest):
             )
         )
     else:
-        # Send an error response if fetching groundwater data failed
         await ctx.send(sender, ErrorResponse(error=groundwater_data["error"]))
-
-
 
 if __name__ == "__main__":
     GroundwaterAgent.run()

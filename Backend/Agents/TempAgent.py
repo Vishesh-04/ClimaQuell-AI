@@ -1,12 +1,8 @@
-# Import Required Libraries
 import requests
 import os
 from uagents import Agent, Context, Model
 from uagents.setup import fund_agent_if_low
-from pydantic import Field
 
-
-# Define Request and Response Models
 class WeatherRequest(Model):
     location: str
 
@@ -26,11 +22,16 @@ class ErrorResponse(Model):
     error: str
 
 
-# Retrieve the API key from environment variables
+MailBox_API = '25c0c3db-c98a-426f-8a59-baa5d5573f35'
+# from uagents import Agent
+#
+# agent = Agent(
+# 	mailbox=”25c0c3db-c98a-426f-8a59-baa5d5573f35"
+# )
+
+
 WEATHER_API_KEY = os.getenv('WEATHER_API_KEY')
 
-# Define the Temperature Agent
-# Create the Temperature (Weather) Agent
 TemperatureAgent = Agent(
     name="TemperatureAgent",
     port=8000,
@@ -38,18 +39,15 @@ TemperatureAgent = Agent(
     endpoint=["http://127.0.0.1:8000/submit"],
 )
 
-
-# Fund the agent if it's low on funds
 fund_agent_if_low(TemperatureAgent.wallet.address())
 
 
-# Function to fetch weather data from the weather API
 async def fetch_weather_data(location):
     try:
         print(f"Fetching weather data for {location}")
         url = f"http://api.weatherapi.com/v1/current.json?key=bb105451e60b48b483880333240102&q={location}&aqi=yes"
         response = requests.get(url)
-        response.raise_for_status()  # Raise error for bad status codes
+        response.raise_for_status()
         data = response.json()
 
         return {
@@ -66,21 +64,17 @@ async def fetch_weather_data(location):
         print(f"Error fetching weather data: {e}")
         return {"status": False, "error": str(e)}
 
-
-# On agent startup, log the agent's details
 @TemperatureAgent.on_event('startup')
 async def agent_details(ctx: Context):
     ctx.logger.info(f'Temperature Agent Address: {TemperatureAgent.address}')
 
 
-# Query handler for temperature requests
 @TemperatureAgent.on_query(model=WeatherRequest, replies={TemperatureResponse, ErrorResponse})
 async def query_handler(ctx: Context, sender: str, msg: WeatherRequest):
     ctx.logger.info(f"Received weather query for location: {msg.location}")
     ctx.logger.info(f"Sender: {sender}")
     print(msg.location)
 
-    # Fetch the weather data
     weather_data = await fetch_weather_data(msg.location)
 
     if weather_data["status"]:
